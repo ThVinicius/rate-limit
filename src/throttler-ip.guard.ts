@@ -14,7 +14,10 @@ export class ThrottlerIpGuard extends ThrottlerGuard {
   ): Promise<boolean> {
     const { req, res } = this.getRequestResponse(context);
 
-    const clientIp = req.connection.remoteAddress;
+    const clientIp =
+      (req.headers['x-forwarded-for'] as string) ||
+      req.connection.remoteAddress;
+
     console.log(
       '🚀 ~ file: throttler-ip.guard.ts:18 ~ ThrottlerIpGuard ~ clientIp:',
       clientIp,
