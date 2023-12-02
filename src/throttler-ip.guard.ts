@@ -14,13 +14,13 @@ export class ThrottlerIpGuard extends ThrottlerGuard {
   ): Promise<boolean> {
     const { req, res } = this.getRequestResponse(context);
 
-    const tracker = await this.getTracker(req);
+    const clientIp = req.connection.remoteAddress;
     console.log(
-      '🚀 ~ file: throttler-ip.guard.ts:18 ~ ThrottlerIpGuard ~ tracker:',
-      tracker,
+      '🚀 ~ file: throttler-ip.guard.ts:18 ~ ThrottlerIpGuard ~ clientIp:',
+      clientIp,
     );
 
-    const key = this.generateKey(context, tracker, throttler.name);
+    const key = this.generateKey(context, clientIp, throttler.name);
     console.log(
       '🚀 ~ file: throttler-ip.guard.ts:20 ~ ThrottlerIpGuard ~ key:',
       key,
