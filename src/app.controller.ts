@@ -7,8 +7,13 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @UseGuards(ThrottlerIpGuard)
-  @Get()
+  @Get('with-rate-limit')
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @Get('no-rate-limit')
+  test(): string {
+    return 'Rota sem rate limit';
   }
 }
