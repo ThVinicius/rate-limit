@@ -6,15 +6,12 @@ import { RateLimitPerIpGuard } from './decorators/throttle-with-ip-guard-decorat
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  // @UseGuards(ThrottlerIpGuard)
   @RateLimitPerIpGuard({ limit: 1, ttl: 10000 })
   @Get('with-rate-limit')
   getHello(): string {
     return this.appService.getHello();
   }
 
-  // @Throttle({ default: { limit: 1, ttl: 2000 } })
-  // @UseGuards(ThrottlerIpGuard)
   @RateLimitPerIpGuard({ limit: 1, ttl: 2000 })
   @Get('with-rate-limit-2')
   getHello2(): string {

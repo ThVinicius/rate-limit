@@ -20,6 +20,18 @@ export class ThrottlerIpGuard extends ThrottlerGuard {
       remoteAddress,
     );
 
+    const realIp = req.headers['x-real-ip'];
+    console.log(
+      '🚀 ~ file: throttler-ip.guard.ts:24 ~ ThrottlerIpGuard ~ realIp:',
+      realIp,
+    );
+
+    const xClientIp = req.headers['x-client-ip'];
+    console.log(
+      '🚀 ~ file: throttler-ip.guard.ts:27 ~ ThrottlerIpGuard ~ xClientIp:',
+      xClientIp,
+    );
+
     // Obter a string do cabeçalho X-Forwarded-For
     const xForwardedForHeader =
       (req.headers['x-forwarded-for'] as string) || '';
