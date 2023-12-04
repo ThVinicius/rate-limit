@@ -1,14 +1,23 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ThrottlerIpGuard } from './throttler-ip.guard';
+import { RateLimitPerIpGuard } from './decorators/throttle-with-ip-guard-decorator.decorator';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @UseGuards(ThrottlerIpGuard)
+  // @UseGuards(ThrottlerIpGuard)
+  @RateLimitPerIpGuard({ limit: 1, ttl: 10000 })
   @Get('with-rate-limit')
   getHello(): string {
+    return this.appService.getHello();
+  }
+
+  // @Throttle({ default: { limit: 1, ttl: 2000 } })
+  // @UseGuards(ThrottlerIpGuard)
+  @RateLimitPerIpGuard({ limit: 1, ttl: 2000 })
+  @Get('with-rate-limit-2')
+  getHello2(): string {
     return this.appService.getHello();
   }
 
