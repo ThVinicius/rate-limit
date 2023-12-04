@@ -28,7 +28,8 @@ export class ThrottlerIpGuard extends ThrottlerGuard {
     const ips = xForwardedForHeader.split(',').map((ip) => ip.trim());
 
     // O endereço IP real do cliente é o primeiro na lista
-    const clientIp = ips[0];
+    const clientIp =
+      ips[0].trim().length > 0 ? ips[0] : req.connection.remoteAddress;
     console.log(
       '🚀 ~ file: throttler-ip.guard.ts:25 ~ ThrottlerIpGuard ~ clientIp:',
       clientIp,
